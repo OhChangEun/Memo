@@ -1,0 +1,44 @@
+CSR을 사용하면 SEO에 불리한 이유 
+
+CSR(Client-Side Rendering)이 SEO에 불리한 이유는 검색 엔진이 
+자바스크립트로 동적으로 생성된 콘텐츠를 제대로 읽지 못하는 경우가 있기 때문입니다.
+
+아래에 개념과 이유를 정리해볼게요:
+
+🌐 CSR(Client-Side Rendering)이란?
+웹 페이지를 로드할 때 HTML은 거의 빈 상태로 오고, 브라우저에서 JavaScript가 실행된 후에 콘텐츠를 만들어 보여주는 방식
+
+대표적인 예: React, Vue 같은 프론트엔드 프레임워크
+
+🚫 SEO에 불리한 이유
+
+🔄 초기 HTML이 비어 있음
+검색 엔진은 처음 받아온 HTML만 분석하는데, CSR은 JavaScript 실행 전까지 내용이 없음
+🕷️ 크롤링의 한계	
+구글은 JS 렌더링을 어느 정도 지원하지만, 다른 검색 엔진(네이버, Bing 등)은 자바스크립트 기반 콘텐츠를 잘 못 읽음
+🕰️ 렌더링 시간 지연	
+JS 로딩·실행까지 시간이 걸리면 크롤러가 타임아웃하거나 빈 콘텐츠만 인식할 수 있음
+
+🔁 예시로 비교
+
+<!-- 검색 엔진이 받는 초기 HTML -->
+<div id="root"></div>
+<!-- 실제 콘텐츠는 JS 실행 후에 생김 -->
+SSR 방식 (Server-Side Rendering)
+<!-- 서버에서 콘텐츠를 만들어서 보냄 -->
+<div id="root">
+  <h1>정보처리기사 공부법</h1>
+  <p>단기간에 합격하는 방법은...</p>
+</div>
+👉 검색 엔진은 SSR처럼 내용이 바로 들어 있는 HTML을 선호합니다.
+
+✅ 그래서 어떻게 대응할까?
+SSR(Server-Side Rendering) 사용
+Next.js, Nuxt 등: React/Vue에서도 SSR이 가능함
+
+프리렌더링(Pre-rendering)
+정적인 HTML을 미리 생성해서 제공
+
+Hybrid Rendering
+일부 페이지는 SSR, 일부는 CSR로 구성
+

@@ -1,0 +1,53 @@
+Vue에서 태그에 class를 동적으로 추가하는 방법
+
+은 아주 쉽습니다. 아래 3가지 방법 중 상황에 맞게 사용하면 됩니다.
+
+✅ 1. 문자열 방식
+클래스를 문자열처럼 넣습니다.
+
+vue
+복사
+편집
+<div class="box active"></div>
+또는 :class를 사용해서 바인딩도 가능:
+
+vue
+복사
+편집
+<div :class="'box active'"></div>
+✅ 2. 객체(Object) 방식 ⭐가장 많이 사용됨
+true인 클래스만 적용됩니다.
+
+vue
+복사
+편집
+<template>
+  <div :class="{ 'error': hasError, 'success': isSuccess }"></div>
+</template>
+
+<script setup>
+const hasError = true;
+const isSuccess = false;
+</script>
+👉 결과: <div class="error"></div>
+
+✅ 3. 배열(Array) 방식
+클래스를 배열로 넣을 수 있어, 고정 클래스 + 조건부 클래스 조합이 가능:
+
+vue
+복사
+편집
+<template>
+  <div :class="['box', { 'error': hasError }]"></div>
+</template>
+
+<script setup>
+const hasError = true;
+</script>
+👉 결과: <div class="box error"></div>
+
+✨ 요약
+방법	예시	설명
+문자열	:class="'a b'"	고정 클래스 여러 개
+객체	:class="{ a: true, b: false }"	true인 클래스만 적용
+배열	:class="['a', { b: true }]"	혼합 사용 가능

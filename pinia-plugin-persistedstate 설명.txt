@@ -1,0 +1,72 @@
+pinia-plugin-persistedstate 설명
+
+ Pinia 상태를 브라우저의 localStorage 또는 sessionStorage에 자동으로 저장해주는 플러그인입니다. 
+즉, 페이지를 새로고침해도 상태가 유지되도록 도와줍니다.
+
+✅ 왜 필요한가요?
+
+Pinia의 상태는 기본적으로 메모리에만 존재합니다.
+→ 페이지를 새로고침하면 상태는 초기화됩니다.
+→ 로그인 정보, 사용자 설정 등을 유지하고 싶을 때 불편함이 발생합니다.
+
+이때 pinia-plugin-persistedstate를 사용하면
+상태를 자동으로 저장하고 복원할 수 있습니다.
+
+🔧 설치 방법
+npm install pinia-plugin-persistedstate
+
+⚙️ 설정 방법
+// main.ts
+import { createApp } from 'vue'
+import { createPinia } from 'pinia'
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
+
+const app = createApp(App)
+
+const pinia = createPinia()
+pinia.use(piniaPluginPersistedstate)
+app.use(pinia)
+app.mount('#app')
+
+🗂️ store에서 사용하기
+// stores/user.ts
+import { defineStore } from 'pinia'
+
+export const useUserStore = defineStore('user', {
+  state: () => ({
+    name: '',
+    isLoggedIn: false
+  }),
+  persist: true  // 상태를 자동으로 localStorage에 저장
+})
+
+⚙️ 옵션 사용
+persist: {
+  enabled: true,         // 기본값 true
+  strategies: [
+    {
+      key: 'user',       // 저장 키 (기본: store ID)
+      storage: sessionStorage, // localStorage 또는 sessionStorage 선택
+      paths: ['name']    // 저장할 state 속성만 지정 가능
+    }
+  ]
+}
+
+📝 예시
+persist: {
+  strategies: [
+    {
+      key: 'my-app-user',
+      storage: localStorage,
+      paths: ['name', 'isLoggedIn']
+    }
+  ]
+}
+
+📌 요약
+기능	설명
+자동 저장	상태를 로컬 또는 세션 스토리지에 저장
+자동 복원	앱이 다시 실행되면 상태를 복원
+세부 설정 가능	어떤 상태를 저장할지 선택 가능
+새로고침 유지	로그인 상태 등 지속 가능
+

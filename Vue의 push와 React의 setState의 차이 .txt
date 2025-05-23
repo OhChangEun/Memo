@@ -1,0 +1,48 @@
+Vue의 ref와 reactive를 사용하는 방식은 React와 다릅니다. React에서는 상태 관리를 위해 useState, useRef, 또는 useReducer 등을 사용합니다.
+
+🔁 당신이 준 Vue 코드 (설명 포함):
+users.value.push({ id: nextId.value++, userName: inputText.value });
+
+users: ref([])로 선언된 배열
+nextId: ref(1)로 선언된 숫자
+inputText: ref("")로 선언된 문자열
+.value로 값을 꺼내고, 갱신
+
+✅ React에서 같은 동작을 하는 코드
+import { useState } from "react";
+
+function App() {
+  const [users, setUsers] = useState([]);
+  const [inputText, setInputText] = useState("");
+  const [nextId, setNextId] = useState(1);
+
+  const handleAddUser = () => {
+    const newUser = { id: nextId, userName: inputText };
+    setUsers([...users, newUser]); // 새로운 배열로 상태 갱신
+    setNextId(nextId + 1);          // 다음 ID 증가
+    setInputText("");               // 입력창 초기화
+  };
+
+  return (
+    <div>
+      <input
+        value={inputText}
+        onChange={(e) => setInputText(e.target.value)}
+        placeholder="사용자 이름 입력"
+      />
+      <button onClick={handleAddUser}>추가</button>
+      <ul>
+        {users.map((user) => (
+          <li key={user.id}>{user.userName}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+🔍 차이 요약
+Vue						React
+ref().value					useState()으로 바로 사용 가능
+.push()로 배열 직접 수정 가능		setState([...prev, newItem])로 갱신
+.value++로 값 증가			setState(prev => prev + 1) 사용
+

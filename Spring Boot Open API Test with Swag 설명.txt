@@ -1,0 +1,36 @@
+Spring Boot Open API Test with Swagger 
+
+1. Spring Boot란?
+자바 기반의 웹 애플리케이션을 빠르게 만들 수 있도록 도와주는 프레임워크.
+Spring Framework를 더 쉽게 사용하도록 만든 자동 설정 기반의 프레임워크.
+
+🌐 2. Open API란?
+외부에서 접근 가능한 API.
+예를 들어, 특정 서비스가 제공하는 기능을 다른 앱이나 웹 서비스에서 사용할 수 있도록 공개한 API.
+보통 문서화되어 있어야 하며, 외부 개발자가 쉽게 사용할 수 있어야 함.
+
+🧪 3. Open API Test란?
+외부 개발자나 내부 개발자가 API가 제대로 작동하는지 확인하기 위해 수행하는 테스트.
+예: GET 요청 시 제대로 응답이 오는지, POST 요청 시 데이터가 잘 저장되는지 등.
+
+🧾 4. Swagger란?
+API 문서를 자동으로 생성해주는 도구.
+API를 시각적으로 문서화해서 브라우저에서 직접 테스트할 수 있도록 도와줌.
+공식 명칭은 **OpenAPI Specification (OAS)**이며, Swagger는 이를 구현한 대표적인 툴.
+
+🛠️ 5. Spring Boot에서 Swagger로 Open API 테스트하는 이유
+내가 만든 API가 어떤 형식인지, 어떤 데이터를 주고받는지 자동 문서화됨.
+Swagger UI를 통해 브라우저에서 버튼만 클릭해도 API 호출 테스트 가능.
+팀원이나 외부 개발자가 API를 빠르게 이해하고 사용할 수 있음.
+
+📘 예시 흐름
+Spring Boot 프로젝트에서 API 작성 (@RestController)
+Swagger 설정 추가 (springdoc-openapi, springfox-swagger 등 라이브러리 사용)
+Swagger UI로 접속 (http://localhost:8080/swagger-ui.html)
+API 목록 확인 및 직접 테스트
+
+🧑‍💻 학습 내용 요약
+항목	내용
+목적	API 문서 자동화 및 테스트
+사용 기술	Spring Boot + Swagger (springdoc-openapi 등)
+기대 효과	API 문서 작성 시간 절약, 테스트 편리성 증가, 협업 효율 향상

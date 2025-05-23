@@ -1,0 +1,78 @@
+Vue 라우터 원리 설명 
+
+Vue 라우터는 SPA(Single Page Application) 구조에서 페이지 이동처럼 보이게 만드는 핵심 기술입니다.
+
+🔍 1. createRouter, createWebHistory
+
+📌 역할
+Vue 라우터 인스턴스를 만드는 함수입니다.
+createWebHistory()는 브라우저 주소(URL) 기록 기능을 이용해서 페이지 이동을 처리합니다.
+
+⚙️ 작동 원리
+사용자가 주소창에서 URL을 바꾸거나 <router-link>를 클릭하면,
+Vue 라우터는 브라우저의 history.pushState() 기능을 사용해서 URL만 바꾸고 새로고침은 안 함
+URL이 바뀌면 Vue 라우터가 자동으로 어떤 컴포넌트를 보여줄지 판단해서 <router-view>에 해당 컴포넌트를 렌더링합니다.
+
+🔍 2. routes 배열
+
+📌 역할
+경로(path)와 컴포넌트(component)를 연결하는 매핑 테이블입니다.
+
+📄 예시
+const routes = [
+  { path: '/', component: HomePage },
+  { path: '/about', component: AboutPage },
+];
+
+⚙️ 작동 원리
+예: 사용자가 /about으로 이동하면, 라우터는 routes 배열에서 path: '/about'에 해당하는 컴포넌트를 찾아서 보여줍니다.
+
+🔍 3. <router-link>
+
+📌 역할
+일반적인 <a> 태그처럼 보이지만, 페이지 새로고침 없이 URL만 변경합니다.
+내부적으로 router.push()를 호출함.
+
+📄 예시
+<router-link to="/about">소개</router-link>
+
+⚙️ 작동 원리
+클릭 시 브라우저의 기본 동작(새로고침)을 막고,
+history.pushState()를 이용해 URL을 바꾸고,
+라우터가 URL을 감지해 <router-view>에 맞는 컴포넌트를 보여줍니다.
+
+🔍 4. <router-view>
+
+📌 역할
+현재 URL에 해당하는 컴포넌트를 여기에 렌더링합니다.
+일종의 자리 표시자(placeholder) 역할입니다.
+
+📄 예시
+<template>
+  <div>
+    <router-view />
+  </div>
+</template>
+
+⚙️ 작동 원리
+사용자가 URL을 바꾸면, Vue 라우터는 routes 배열을 검색해서 해당 컴포넌트를 찾고,
+그 컴포넌트를 <router-view>에 자동으로 렌더링합니다.
+
+📈 전체 동작 흐름
+사용자가 <router-link to="/about">소개</router-link> 클릭
+Vue 라우터가 history.pushState('/about')로 URL 변경
+브라우저는 새로고침하지 않고 URL만 바뀜
+Vue 라우터가 routes 배열에서 path: '/about' 찾아서 해당 컴포넌트를 가져옴
+<router-view> 자리에 해당 컴포넌트가 렌더링됨
+
+📦 추가 개념: createWebHistory vs createWebHashHistory
+	방식				URL 예시		특징
+createWebHistory()		/about		서버 설정 필요 (HTML5 방식)
+createWebHashHistory()	/#/about		해시(#) 기반, 서버 설정 불필요
+
+✅ 정리
+구성 요소			역할							작동 원리 요약
+createRouter		라우터 인스턴스 생성				routes 배열 등록, history 방식 지정
+routes			URL과 컴포넌트 매핑				URL에 맞는 컴포넌트 찾기
+<router-link>		새로고침 없는 이동				내부적으로 router.push() 실행
+<router-view>		현재 URL에 해당하는 컴포넌트 보여줌	라우터가 자동으로 해당 컴포넌트를 렌더링함

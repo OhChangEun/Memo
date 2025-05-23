@@ -1,0 +1,56 @@
+Vue에서 props는 부모 컴포넌트가 자식 컴포넌트에게 데이터를 전달하는 방법입니다.
+쉽게 말하면, **"부모가 자식에게 값 넘겨주는 통로"**라고 이해하면 됩니다.
+
+🧱 기본 개념
+props	** properties(속성)**의 줄임말로, 부모 → 자식 데이터 전달 방식
+방향성	단방향 (부모 → 자식)
+
+🔁 사용 예시
+✅ 1. 부모 → 자식으로 데이터 전달
+
+🧩 부모 컴포넌트
+<template>
+  <Child message="Hello from parent" />
+</template>
+
+<script setup>
+import Child from './Child.vue'
+</script>
+
+🧩 자식 컴포넌트
+<template>
+  <p>{{ message }}</p>
+</template>
+
+<script setup>
+const props = defineProps({
+  message: String
+})
+</script>
+
+✅ 2. props에 기본값, 타입 지정, 필수 여부 설정
+const props = defineProps({
+  message: {
+    type: String,
+    required: true,       // 반드시 전달해야 함
+    default: '기본 메시지' // 전달 안 되면 이걸 사용
+  },
+  count: {
+    type: Number,
+    default: 0
+  }
+})
+
+⚠️ 중요: props는 읽기 전용!
+자식 컴포넌트 안에서 props 값을 직접 수정하면 안 됩니다.
+
+props.message = '변경❌' // 이렇게 하면 Vue가 경고 줍니다
+→ 필요하다면 data()나 ref()를 이용해 복사해서 사용하세요.
+
+📌 요약
+항목	설명
+정의	부모가 자식에게 데이터 전달
+방향	부모 → 자식 (단방향)
+사용	<Child :propName="value" />
+설정	defineProps() 또는 props: ['name']
+주의	자식에서 props 직접 수정 ❌

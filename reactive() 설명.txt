@@ -1,0 +1,61 @@
+Vue의 reactive는 **반응형 데이터(reactive state)**를 만들기 위한 Vue 3의 핵심 기능 중 하나입니다.
+Composition API에서 사용되며, 객체에 반응형 시스템을 적용해줍니다.
+
+✅ 기본 개념: reactive()
+import { reactive } from 'vue';
+
+const state = reactive({
+  count: 0,
+  message: 'Hello'
+});
+이제 state.count나 state.message를 변경하면, 이 데이터를 사용하는 템플릿이나 컴포넌트는 자동으로 업데이트됩니다.
+
+📌 사용 예시
+<template>
+  <div>
+    <p>{{ state.count }}</p>
+    <button @click="increment">증가</button>
+  </div>
+</template>
+
+<script setup>
+import { reactive } from 'vue';
+
+const state = reactive({
+  count: 0
+});
+
+function increment() {
+  state.count++;
+}
+</script>
+
+버튼을 클릭할 때마다 count가 증가하고 화면이 자동으로 갱신됩니다.
+
+🧠 reactive() vs ref()
+구분	reactive()	ref()
+대상	객체(object), 배열(array) 등 복합형	기본형(string, number, boolean)
+접근 방식	state.count	count.value
+내부 처리	내부 속성을 모두 감시	하나의 값만 감시
+
+예시 비교
+// reactive
+const state = reactive({ count: 0 });
+state.count++;
+
+// ref
+const count = ref(0);
+count.value++;
+⚠️ reactive 주의사항
+객체 전체가 감시 대상입니다. 단일 값만 필요하다면 ref()가 더 적절할 수 있습니다.
+
+reactive로 만든 객체를 구조 분해 할당(destructuring)하면 반응형이 깨집니다.
+
+const { count } = state; // ❌ 이건 반응형 아님!
+✍️ 요약
+개념	설명
+역할	객체를 반응형으로 만들어 Vue가 추적 가능하게 함
+주요 사용처	Composition API에서 상태(state) 관리
+대체 가능성	단일 값이면 ref(), 객체라면 reactive() 사용
+
+필요하다면 reactive() 내부 동작 원리나 readonly(), toRefs() 등 관련 개념도 더 자세히 설명해드릴 수 있어요.

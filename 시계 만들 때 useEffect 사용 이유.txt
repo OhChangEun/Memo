@@ -1,0 +1,42 @@
+ 타이머 + 클린업 함수
+
+import { useState, useEffect } from "react";
+
+const Clock = () => {
+  const [time, setTime] = useState(new Date());
+
+setInterval(() => {
+      setTime(new Date());
+    }, 1000);
+
+  return (
+    <>
+      <p>Clock</p>
+      <h2>현재 시간 : {time.toLocaleTimeString()}</h2>
+    </>
+  );
+};
+
+export default Clock;
+
+위와 같이 짜면 
+setInterval이 컴포넌트가 리렌더링될 때마다 계속 생성된다는 것입니다.
+
+🔧 문제 설명
+setInterval이 Clock 컴포넌트 바디에서 직접 실행되고 있어서, 컴포넌트가 리렌더링될 때마다 새로운 interval이 등록됩니다.
+그 결과로:
+여러 개의 interval이 중복 실행되고
+setTime이 여러 번 호출되어 불필요한 리렌더링이 발생하며
+결국 메모리 누수 또는 성능 저하 문제가 생깁니다.
+
+const Clock = () => {
+  const [time, setTime] = useState(new Date());
+
+  useEffect(() => {
+    const timerId = setInterval(() => {
+      setTime(new Date());
+    }, 1000);
+
+    // 클린업: 컴포넌트가 언마운트되거나 리렌더링 전에 타이머 제거
+    return () => clearInterval(timerId);
+  }, []); // 빈 배열: 컴포넌트가 처음 mount될 때만 실행

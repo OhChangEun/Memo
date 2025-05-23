@@ -1,0 +1,27 @@
+Yarn
+자바스크립트 패키지 매니저 중 하나로,Node.js 환경에서 프로젝트의 의존성(라이브러리나 모듈)을 설치하고 관리하는 도구입니다.
+ 원래는 npm(Node Package Manager)이 가장 많이 쓰였지만, Facebook이 성능과 안정성을 개선하기 위해 Yarn을 만들었습니다.
+
+Yarn의 주요 특징:
+
+빠른 설치 속도: 캐시 기능을 사용해서 이전에 설치한 패키지를 빠르게 재사용합니다.
+일관된 의존성 설치: yarn.lock 파일을 통해 어느 개발자든 동일한 버전의 패키지를 설치할 수 있습니다.
+병렬 다운로드: 여러 패키지를 동시에 설치해서 속도를 높입니다.
+보안성: 설치 중 무결성 검사(Integrity Check)를 통해 파일이 손상되거나 위조되지 않았는지 확인합니다.
+
+Yarn 주요 명령어:
+명령어				설명
+yarn init				새 프로젝트 초기화 (package.json 생성)
+yarn install				package.json에 정의된 모든 패키지 설치
+yarn add [패키지명]		특정 패키지 설치 (예: yarn add react)
+yarn remove [패키지명]		패키지 제거
+yarn upgrade			패키지 업데이트
+
+Yarn vs npm 간단 비교:
+항목		Yarn			npm
+속도		빠름			다소 느림 (버전에 따라 개선됨)
+lock 파일	yarn.lock		package-lock.json
+설치 명령	yarn install		npm install
+제작사	Facebook		npm, Inc. (현재 GitHub/Microsoft)
+
+요약: Yarn은 빠르고 안정적인 자바스크립트 패키지 매니저로, npm의 대체제로 널리 사용됩니다.

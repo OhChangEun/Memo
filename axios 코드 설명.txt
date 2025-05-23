@@ -1,0 +1,66 @@
+axios 코드 설명
+
+axios를 활용해서 API 요청을 보낼 때 공통 설정을 만들고, 
+토큰 인증과 에러 처리까지 자동으로 해주는 설정입니다.
+
+아래에 쉽게 설명드릴게요 👇
+
+✅ 1. axiosInstance 만들기
+const axiosInstance = axios.create({
+  baseURL: "http://222.117.237.119:8111",
+});
+👉 axios.create()로 새로운 axios 객체를 만들어요.
+이 객체는 http://222.117.237.119:8111을 기본 주소로 사용해서 요청을 보냅니다.
+
+예:
+axiosInstance.get("/users"); 
+// 실제 요청 주소는: http://222.117.237.119:8111/users
+
+
+✅ 2. 요청 인터셉터 (Request Interceptor)
+axiosInstance.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
+👉 요청 보내기 직전에 실행되는 코드입니다.
+localStorage에 저장된 토큰을 꺼내서
+요청의 **헤더(Header)**에 붙입니다:
+Authorization: Bearer your_token
+
+📌 왜?
+→ API 서버가 "이 요청이 인증된 사용자 요청인지" 판단하기 위해서!
+
+
+✅ 3. 응답 인터셉터 (Response Interceptor)
+axiosInstance.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status == 401) {
+      alert("로그인이 필요합니다");
+      router.push("/login");
+    }
+    return Promise.reject(error);
+  }
+);
+
+👉 응답을 받은 후 실행됩니다.
+
+만약 서버가 401 Unauthorized (인증 실패) 응답을 보내면:
+alert()으로 사용자에게 알림을 띄우고
+router.push("/login")으로 로그인 페이지로 강제 이동합니다
+
+✅ 4. export
+export default axiosInstance;
+→ 이 설정이 적용된 axiosInstance를 다른 곳에서 불러와서(API 요청할 때) 사용할 수 있게 내보냅니다.
+
+🔁 정리
+기능	설명
+axios.create			공통 설정된 axios 인스턴스 만들기
+request 인터셉터		요청마다 토큰 자동 추가
+response 인터셉터	401 에러 시 로그인 유도
+baseURL			모든 요청의 기본 주소 설정
+

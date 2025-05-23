@@ -1,0 +1,17 @@
+Tailwind 폰트 크기 정리 
+
+클래스	의미	크기(기본값)
+text-xs	Extra Small (아주 작음)	0.75rem (약 12px)
+text-sm	Small (작음)	0.875rem (약 14px)
+text-base	Base (기본, 보통 크기)	1rem (약 16px)
+text-lg	Large (큼)	1.125rem (약 18px)
+text-xl	Extra Large (아주 큼)	1.25rem (약 20px)
+text-2xl	2x Extra Large (두 배 큰 크기)	1.5rem (약 24px)
+
+설명
+xs = Extra Small
+sm = Small
+base = 기준 크기, 기본 폰트 크기
+lg = Large
+xl = Extra Large
+2xl = 2배 Extra Large (더 크게)

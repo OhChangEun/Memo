@@ -1,0 +1,35 @@
+네, 맞습니다.
+Vue 3에서 부모 컴포넌트가 자식 컴포넌트의 input 값을 v-model을 통해 양방향 바인딩하려면, 자식 컴포넌트에서 emit을 사용해야 합니다.
+
+✅ 기본 흐름
+
+부모 컴포넌트
+<script setup>
+import { ref } from 'vue';
+import ChildComponent from './ChildComponent.vue';
+const message = ref('');
+</script>
+
+<template>
+  <ChildComponent v-model="message" />
+</template>
+
+자식 컴포넌트 (ChildComponent.vue)
+<script setup>
+defineProps(['modelValue']);
+defineEmits(['update:modelValue']);
+</script>
+<template>
+  <input :value="modelValue" @input="$emit('update:modelValue', $event.target.value)" />
+</template>
+
+🔍 설명
+v-model="message"는 Vue 3에서 내부적으로 :modelValue="message"와 @update:modelValue="newVal => message = newVal"로 동작합니다.
+
+자식 컴포넌트는 modelValue라는 prop을 받아서 렌더링하고, 값이 변경될 때 update:modelValue 이벤트를 emit해야 부모의 값이 업데이트됩니다.
+
+📌 요약
+✅ defineProps(['modelValue']): 부모로부터 값 받기
+✅ defineEmits(['update:modelValue']): 변경사항 부모에게 알리기
+✅ @input="$emit('update:modelValue', newValue)": 변경 시 emit 호출
+

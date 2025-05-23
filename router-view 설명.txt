@@ -1,0 +1,85 @@
+<router-view /> 설명 
+
+Vue에서 <router-view />는 현재 URL에 따라 알맞은 컴포넌트를 화면에 "끼워 넣는" 자리 표시자예요. 이게 Vue Router의 핵심 기능 중 하나죠.
+
+✅ 한 줄 요약
+<router-view />는 현재 라우터 경로에 맞는 컴포넌트를 표시하는 "창구" 역할을 합니다.
+
+🧩 동작 원리
+사용자가 브라우저에서 /home/about으로 이동
+
+Vue Router가 정의된 routes 배열을 검사해서 해당 경로에 연결된 컴포넌트를 찾음
+
+그 컴포넌트를 <router-view /> 위치에 표시함
+
+👀 예시로 보기
+🗂 라우터 설정
+js
+복사
+편집
+const routes = [
+  {
+    path: "/home",
+    component: Layout,
+    children: [
+      { path: "about", component: About },
+      { path: "profile/:userName", component: Profile },
+    ],
+  },
+];
+🏗 Layout.vue
+vue
+복사
+편집
+<template>
+  <div>
+    <header>고정 상단바</header>
+    <main>
+      <router-view /> <!-- 여기에 About 또는 Profile이 들어옴 -->
+    </main>
+    <footer>고정 하단바</footer>
+  </div>
+</template>
+사용자가 /home/about으로 접근하면 → About.vue가 <router-view /> 자리에 들어감
+
+/home/profile/jang으로 접근하면 → Profile.vue가 <router-view />에 들어감
+
+🔄 중첩 가능: 중첩 <router-view />
+라우팅이 여러 단계로 중첩되면, 자식 라우트 안에서도 <router-view />를 또 사용할 수 있어요.
+
+예:
+
+js
+복사
+편집
+{
+  path: "/dashboard",
+  component: DashboardLayout,
+  children: [
+    {
+      path: "settings",
+      component: SettingsLayout,
+      children: [
+        { path: "profile", component: ProfileSettings },
+      ],
+    },
+  ],
+}
+그리고 각 layout 컴포넌트에 <router-view />를 넣으면:
+
+/dashboard/settings/profile 접속 시
+
+DashboardLayout → SettingsLayout → ProfileSettings 순으로 뷰가 중첩되어 보여짐
+
+⚙️ 기술적으로는?
+Vue Router는 URL 변경을 감지하고
+
+matched 배열(라우터 경로에 매칭된 컴포넌트 목록)을 기반으로
+
+<router-view />를 찾은 위치에 동적으로 해당 컴포넌트를 렌더링
+
+🔚 결론
+질문	답변
+<router-view />는 무엇인가요?	현재 URL에 따라 알맞은 컴포넌트를 렌더링하는 자리 표시자입니다.
+어디에 넣어야 하나요?	공통 레이아웃 컴포넌트(예: Layout.vue) 안에 넣는 게 일반적입니다.
+여러 개 중첩도 가능한가요?	네. 라우터 중첩 구조에 따라 <router-view />를 여러 단계로 넣을 수 있습니다.

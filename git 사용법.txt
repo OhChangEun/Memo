@@ -1,0 +1,9 @@
+git 사용법
+
+cd 내작업폴더
+git init
+git remote add origin https://github.com/OhChangEun/AutoEverCloneCoding.git
+git add .
+git commit -m "최초 커밋"
+git branch -M main
+git push -u origin main

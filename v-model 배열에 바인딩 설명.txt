@@ -1,0 +1,48 @@
+v-model 배열에 바인딩 설명 
+
+<input type="checkbox" v-model="selected" /> 
+구조는 내부적으로 자동으로 배열을 다루는 특별한 동작을 합니다.
+
+✅ 핵심 원리
+v-model을 배열에 바인딩하면, Vue는 다음과 같은 자동 동작을 수행합니다:
+
+체크됨 (checked) ➜ value를 배열에 추가
+체크 해제됨 (unchecked) ➜ value를 배열에서 제거
+
+즉, selected가 배열이고 v-model="selected"이면, 
+Vue는 사용자가 체크박스를 클릭할 때마다 배열을 알아서 수정해 줍니다.
+
+🔍 예시 흐름
+1. 초기 상태
+const selected = ref(["apple"]);
+selected.value === ['apple']
+
+2. 사용자가 "오렌지" 체크
+<input type="checkbox" value="orange" v-model="selected" />
+"orange"가 배열에 없으므로 → selected.value.push("orange")
+selected.value === ['apple', 'orange']
+
+3. 사용자가 "사과" 체크 해제
+"apple"이 배열에 있으므로 → 제거됨
+selected.value === ['orange']
+
+⚙️ Vue ***내부***에서 어떤 일이 벌어지나?
+Vue는 v-model과 type="checkbox"가 함께 쓰이고 v-model이 배열인 것을 감지하면 다음 로직을 수행합니다:
+
+if (checkbox.checked) {
+  // 배열에 없으면 추가
+  if (!selected.includes(value)) selected.push(value)
+} else {
+  // 배열에 있으면 제거
+  const index = selected.indexOf(value)
+  if (index > -1) selected.splice(index, 1)
+}
+
+🔎 참고: value 속성의 역할
+<input type="checkbox" value="apple" v-model="selected" />
+value="apple": 체크박스에 연결된 실제 값
+
+이 값이 selected 배열에 추가되거나 제거됨
+
+✅ 결론
+v-model이 배열에 바인딩되어 있고, 체크박스가 사용되면 Vue는 체크 상태에 따라 자동으로 배열에서 값을 추가하거나 제거하는 동작을 해줍니다. 덕분에 따로 수동으로 push/pop할 필요가 없습니다.

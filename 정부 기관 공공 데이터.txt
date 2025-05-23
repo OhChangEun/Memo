@@ -1,0 +1,34 @@
+정부 기관 공공 데이터 
+>> json 형태 
+>> vue 형태로 뿌리기 
+>> ex) 날씨 콤보박스 > 지역구 콤보박스 > 날씨 출력
+
+
+npm install --g yarn
+yarn -v     # yarn 설치 확인
+
+yarn create vite
+
+cd my-vue-app       # 생성된 프로젝트 폴더로 이동
+yarn                # 의존성 설치
+yarn dev            # 개발 서버 실행
+
+
+컬럼명	이유
+
+시도명	지역 필터링, 분류에 필요
+시군구명	실제 지역 구분
+종량제봉투용도	쓰레기봉투, 음식물봉투 등 구분
+5ℓ가격, 10ℓ가격, 20ℓ가격	가장 많이 쓰는 용량 기준 가격
+관리부서전화번호	문의용 (선택사항)
+
+
+
+
+.payt-bag-card {
+  border: 1px solid #ccc;
+  padding: 1rem;
+  border-radius: 8px;
+  max-width: 600px;
+  background: #f9f9f9;
+}

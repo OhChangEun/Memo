@@ -1,0 +1,35 @@
+Vue Router 설정 코드입니다. 
+SPA(Single Page Application)에서 페이지 간 이동을 담당하는 라우터(router)를 구성하는 방식.
+
+🔧 1. import 구문
+import { createRouter, createWebHistory } from "vue-router";
+import Home from "../pages/Home.vue";
+import About from "../pages/About.vue";
+createRouter: Vue Router 인스턴스를 생성하는 함수입니다.
+
+createWebHistory: HTML5 History API를 사용한 히스토리 모드 (URL에 # 없이 깨끗한 주소 사용).
+Home.vue, About.vue: 각각의 경로에 대응하는 컴포넌트입니다.
+
+🗺️ 2. routes 배열
+const routes = [
+  { path: "/", component: Home },
+  { path: "/about", component: About },
+];
+라우팅 경로(path)와 그에 대응하는 컴포넌트(component)를 지정합니다.
+
+/ → Home.vue 컴포넌트
+/about → About.vue 컴포넌트
+
+🚦 3. createRouter 함수
+const router = createRouter({
+  history: createWebHistory(),
+  routes,
+});
+history: URL 주소를 관리하는 방식으로, createWebHistory()는 브라우저의 기본 히스토리 모드를 사용합니다 (http://example.com/about처럼 깔끔한 URL 사용 가능).
+
+routes: 위에서 설정한 경로-컴포넌트 매핑 배열을 전달합니다.
+
+📦 4. export
+export default router;
+생성한 라우터 인스턴스를 default export 하여 Vue 앱에 등록할 수 있도록 합니다. 일반적으로 main.js 또는 main.ts에서 app.use(router)로 등록합니다.
+

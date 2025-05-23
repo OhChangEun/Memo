@@ -1,0 +1,127 @@
+**"전역 상태 관리"**는 앱의 여러 컴포넌트에서 공통 데이터를 공유하고 관리할 수 있게 해주는 기능
+
+예를 들어:
+내가 어떤 테마 색상을 선택했는지
+로그인한 사용자 정보가 무엇인지
+어떤 설정이 켜져 있는지
+
+이런 정보를 앱 전체에서 기억하고 사용하려면 "전역 상태 관리"가 필요해요. 
+Vue에서는 그걸 Pinia라는 도구로 쉽게 할 수 있어요.
+
+
+🧩 구성 요소 하나씩 설명
+1. 📁 stores/theme.js — 상태 저장소(Store)
+
+import { defineStore } from "pinia";
+
+export const useThemeStore = defineStore("theme", {
+  state: () => ({
+    color: "orange",
+  }),
+  actions: {
+    setColor(newColor) {
+      this.color = newColor;
+    },
+  },
+  persist: true, // ✅ 자동으로 localStorage에 저장됨
+});
+
+이건 전역 상태 저장소예요. 이름은 "theme"이고, 다음과 같은 일을 해요:
+state: 저장할 데이터 (여기선 테마 색상 color)
+actions: 상태를 바꾸는 함수들 (setColor로 색을 바꿈)
+persist: true: 앱을 새로고침해도 저장된 color 값을 localStorage에 기억시킴
+
+즉, 이 파일은 테마 색상 관련된 데이터를 전역에서 공유하고 바꿀 수 있도록 준비하는 코드예요.
+
+
+2. 📁 main.js — 앱 설정
+
+import { createApp } from "vue";
+import App from "./App.vue";
+import router from "./router";
+
+import { createPinia } from "pinia";
+import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
+
+const app = createApp(App);
+const pinia = createPinia();
+pinia.use(piniaPluginPersistedstate); // persist 작동하게 하기
+
+app.use(pinia); // ✅ Pinia 연결
+app.use(router); // ✅ 라우터 연결
+app.mount("#app"); // ✅ 앱 실행
+이건 앱의 초기 설정이에요. 중요한 부분은 이거예요:
+
+createPinia(): Pinia 상태 관리 시작
+pinia.use(...): persist: true가 동작하도록 플러그인 연결
+app.use(pinia): 전체 앱에 Pinia 상태 연결
+
+이 설정을 해야만 위에서 만든 theme.js 상태 저장소가 제대로 작동해요.
+
+3. 📁 vite.config.js — 개발 설정
+resolve: {
+  alias: {
+    "@": path.resolve(__dirname, "./src"),
+  },
+}
+이건 그냥 @/stores/theme 같은 경로를 쉽게 쓰기 위한 설정이에요. 폴더 위치 기억 안 해도 돼서 편리해요.
+
+예: @/stores/theme는 src/stores/theme.js와 같아요.
+
+4. 📄 컴포넌트에서 사용하는 방법
+<script setup>
+import { useThemeStore } from "@/stores/theme";
+
+const themeStore = useThemeStore();
+const setColor = themeStore.setColor;
+const colors = ["orange", "green", "lightgrey", "grey", "royalblue"];
+</script>
+
+이건 themeStore를 불러와서 사용하는 부분이에요:
+useThemeStore() → 전역 저장소 불러오기
+setColor(...) → 버튼 클릭 시 색상 바꾸기
+
+<button
+  v-for="c in colors"
+  :key="c"
+  @click="setColor(c)"
+  :style="{ backgroundColor: c }"
+  ...
+>
+  {{ c }}
+</button>
+버튼을 클릭하면 setColor("green")처럼 함수가 실행되고,
+
+→ 저장소의 color가 바뀌고,
+→ 이 값이 앱 전체에 반영돼요.
+
+
+<script setup>
+const emit = defineEmits(["region-click"]);
+const handleRegionClick = (region) => {
+  emit("region-click", region);
+};
+</script>
+
+<style scoped>
+.land {
+  fill: #cccccc;
+  fill-opacity: 1;
+  stroke: white;
+  stroke-opacity: 1;
+  stroke-width: 0.5;
+  transition: transform 0.3s ease;
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  cursor: pointer;
+  position: relative;
+  z-index: 0;
+}
+.land:hover {
+  transform: scale(1.02);
+  fill: #6b7280;
+  z-index: 10; /* hover 시 위로 올림 */
+}
+</style>
+
+

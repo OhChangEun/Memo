@@ -1,0 +1,21 @@
+로그인 페이지도 
+vue 형태로 - tailwind를 기준으로 코드 짜기 
+
+>> 로그인 기능 완성해서 서버에 데이터가 올바른지 확인하기 
+
+>> 로그인, 회원 가입 페이지 이동 잘되는지 확인하기 
+
+
+Sk11!!11
+
+      const userListRes = await axios.get(
+        "http://222.117.237.119:8111/user/list"
+      );
+      const user = userListRes.data.find((u) => u.email === email);
+
+      if (user) {
+        authStore.login({
+          email: user.email,
+          name: user.name,
+        });
+      }
