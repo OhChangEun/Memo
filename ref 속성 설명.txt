@@ -1,0 +1,26 @@
+ref 속성 설명 
+
+React에서 ref=는 특정 DOM 요소나 컴포넌트에 직접 접근하기 위한 연결 고리입니다.
+즉, ref=는 useRef()로 만든 ref 객체를 해당 요소와 연결하는 역할을 해요.
+
+🔍 ref= 설명
+<input ref={inputRef} />
+inputRef는 useRef()로 만든 객체이고, { current: null }로 시작합니다.
+
+이 JSX가 렌더링되면 React가 자동으로 해당 input DOM 요소를 inputRef.current에 넣어줍니다.
+즉, 렌더링 이후에 inputRef.current는 input DOM을 가리키게 됩니다.
+
+🧠 정리하면:
+항목	설명
+useRef()	참조 객체를 생성 ({ current: null })
+ref={inputRef}	input DOM과 inputRef 객체를 연결
+inputRef.current	연결된 실제 DOM 요소에 접근 가능 (focus(), disabled, 등 조작 가능)
+
+🧪 예시 흐름
+const inputRef = useRef(null); // 초기값 { current: null }
+<input ref={inputRef} />  // 렌더링 이후 → inputRef.current = 실제 <input> DOM
+inputRef.current.focus(); // input에 포커스 이동
+
+💡 참고로
+만약 ref=를 생략하면 useRef()로 만든 객체가 DOM과 연결되지 않기 때문에
+inputRef.current는 여전히 null이며, DOM 조작이 불가능합니다.

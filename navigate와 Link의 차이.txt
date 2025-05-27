@@ -1,0 +1,40 @@
+navigate와 <Link>의 차이
+
+1. navigate()
+함수 형태로 프로그래밍적으로 페이지 이동할 때 사용합니다.
+보통 컴포넌트 내에서 이벤트 처리 함수나 사이드 이펙트(예: 로그인 후 리다이렉트)에서 호출합니다.
+React Router v6 기준으로, useNavigate() 훅을 통해 반환받은 navigate() 함수를 호출합니다.
+
+예시:
+import { useNavigate } from 'react-router-dom';
+
+function MyComponent() {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    // 프로그래밍적 이동
+    navigate('/home');
+  };
+
+  return <button onClick={handleClick}>Go Home</button>;
+}
+
+2. <Link>
+컴포넌트 형태로 렌더링 시점에 클릭 가능한 링크를 만들 때 사용합니다.
+HTML의 <a> 태그와 비슷한 역할을 하지만, 페이지 전체 리로드 없이 클라이언트 사이드 라우팅을 해줍니다.
+단순히 UI에 “이동할 수 있는 링크”를 표시하고 싶을 때 씁니다.
+
+예시:
+import { Link } from 'react-router-dom';
+
+function MyComponent() {
+  return <Link to="/home">Go Home</Link>;
+}
+
+정리
+구분	navigate()	Link
+타입	함수	컴포넌트
+사용 시점	이벤트 핸들러, 함수 내부 등	JSX 렌더링 시
+페이지 이동 방식	프로그래밍적, 조건부 이동에 적합	사용자 클릭에 의한 이동에 적합
+렌더링 여부	렌더링 안 함	렌더링됨 (링크 UI 생성)
+

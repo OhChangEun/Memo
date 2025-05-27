@@ -1,31 +1,27 @@
 Vue와 React의 렌더링 방식 차이
 
 ✅ 1. 공통점 (기본 개념)
-항목	Vue & React
+항목			Vue & React
 Virtual DOM	둘 다 실제 DOM을 직접 건드리지 않고, Virtual DOM을 사용해 변경 사항만 적용
-선언형 UI	UI를 상태(state)에 따라 자동으로 다시 그림
+선언형 UI		UI를 상태(state)에 따라 자동으로 다시 그림
 컴포넌트 기반	각각의 UI를 컴포넌트 단위로 구성
 
 🔍 2. 렌더링 방식 차이점
-항목	React	Vue
-렌더링 로직 위치	JSX 내부에서 로직 + 뷰를 함께 구성	템플릿(template)과 로직(script)이 명확히 분리
-렌더링 트리거	setState() 또는 useState로 상태 변경 시 전체 함수 다시 실행 후 Virtual DOM 비교	반응형 시스템으로 의존성 추적 → 필요한 부분만 재렌더링
-Virtual DOM 동작	모든 상태 변경 시 전체 컴포넌트 함수 재실행 후 Virtual DOM 비교(diffing)	상태 변경 시 관련된 reactive dependency만 추적해서 부분 렌더링
-템플릿 방식	JSX (JavaScript 확장 문법) 사용	HTML 기반 템플릿 + v-bind, v-for 같은 지시자 사용
-렌더링 최적화	memo, useMemo, useCallback 등으로 성능 최적화 필요	자동으로 반응형 최적화 (Vue의 reactive system)
+항목				React															Vue
+렌더링 로직 위치		JSX 내부에서 로직 + 뷰를 함께 구성									템플릿(template)과 로직(script)이 명확히 분리
+렌더링 트리거		setState() 또는 useState로 상태 변경 시 전체 함수 다시 실행 후 Virtual DOM 비교		반응형 시스템으로 의존성 추적 → 필요한 부분만 재렌더링
+Virtual DOM 동작	모든 상태 변경 시 전체 컴포넌트 함수 재실행 후 Virtual DOM 비교(diffing)			상태 변경 시 관련된 reactive dependency만 추적해서 부분 렌더링
+템플릿 방식		JSX (JavaScript 확장 문법) 사용										HTML 기반 템플릿 + v-bind, v-for 같은 지시자 사용
+렌더링 최적화		memo, useMemo, useCallback 등으로 성능 최적화 필요						자동으로 반응형 최적화 (Vue의 reactive system)
 
 🔁 3. 반응형(Reactivity) 처리 방식
-항목	React	Vue
-기본 구조	상태 변경 → 전체 컴포넌트 리렌더링 → Virtual DOM 비교	상태 변경 → 의존성 추적된 부분만 리렌더링
-핵심 기술	Hook 기반 (useState, useEffect 등)	Proxy 기반 반응형 시스템 (Vue 3에서 reactive, ref)
-비효율 방지	직접 React.memo나 useCallback 등으로 관리	Vue가 내부에서 자동으로 의존성 추적해서 관리
+항목			React										Vue
+기본 구조		상태 변경 → 전체 컴포넌트 리렌더링 → Virtual DOM 비교	상태 변경 → 의존성 추적된 부분만 리렌더링
+핵심 기술		Hook 기반 (useState, useEffect 등)					Proxy 기반 반응형 시스템 (Vue 3에서 reactive, ref)
+비효율 방지	직접 React.memo나 useCallback 등으로 관리			Vue가 내부에서 자동으로 의존성 추적해서 관리
 
 🧠 예를 들어 보면
 React
-
-jsx
-복사
-편집
 function Counter() {
   const [count, setCount] = useState(0);
   return <div onClick={() => setCount(count + 1)}>Click {count}</div>;
@@ -33,10 +29,6 @@ function Counter() {
 count가 변경되면 Counter 전체 함수가 다시 실행됨.
 
 Vue
-
-vue
-복사
-편집
 <template>
   <div @click="count++">Click {{ count }}</div>
 </template>
@@ -48,8 +40,8 @@ const count = ref(0);
 count만 바뀌면, 그 부분만 추적해서 자동 렌더링.
 
 📌 결론 요약
-항목	React	Vue
-렌더링 방식	함수 전체 재실행 + Virtual DOM diffing	반응형 추적 기반 렌더링
-최적화 방식	수동 최적화 필요 (hooks)	대부분 자동 최적화
-템플릿	JSX	HTML 템플릿 + 지시자
-사용 편의성	유연하지만 수동 관리 필요	직관적이고 자동 처리 많음
+항목			React								Vue
+렌더링 방식	함수 전체 재실행 + Virtual DOM diffing		반응형 추적 기반 렌더링
+최적화 방식	수동 최적화 필요 (hooks)				대부분 자동 최적화
+템플릿		JSX								HTML 템플릿 + 지시자
+사용 편의성	유연하지만 수동 관리 필요				직관적이고 자동 처리 많음

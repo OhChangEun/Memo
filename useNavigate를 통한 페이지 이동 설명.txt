@@ -1,0 +1,45 @@
+useNavigate를 통한 페이지 이동 설명 
+
+React에서도 react-router-dom의 useNavigate() 훅을 사용하면 Vue의 router.push()와 같은 방식으로 페이지 이동을 할 수 있습니다.
+
+✅ React에서 router.push와 같은 기능: useNavigate
+📦 사용 방법 요약
+import { useNavigate } from 'react-router-dom';
+
+function MyComponent() {
+  const navigate = useNavigate();
+
+  const handleClick = async () => {
+    // 예: 서버에 요청
+    const res = await fetch('/api/some-data');
+    const data = await res.json();
+
+    if (data.success) {
+      // 페이지 이동 (Vue의 router.push와 동일)
+      navigate('/success-page');
+    } else {
+      navigate('/error');
+    }
+  };
+
+  return <button onClick={handleClick}>서버 요청 후 이동</button>;
+}
+
+🧠 Vue vs React 비교
+기능	Vue (vue-router)	React (react-router-dom)
+라우터 인스턴스 접근	const router = useRouter()	const navigate = useNavigate()
+페이지 이동	router.push('/about')	navigate('/about')
+replace 방식 이동	router.replace('/about')	navigate('/about', { replace: true })
+쿼리/파라미터 전달	router.push({ path: '/user', query: { id: 1 } })	navigate('/user?id=1') or use state
+
+✅ 추가 예제: 상태(state)도 함께 넘기기
+navigate('/detail', { state: { userId: 123 } });
+그리고 이동한 컴포넌트에서 받기:
+
+import { useLocation } from 'react-router-dom';
+
+function Detail() {
+  const location = useLocation();
+  const userId = location.state?.userId;
+  return <div>userId: {userId}</div>;
+}

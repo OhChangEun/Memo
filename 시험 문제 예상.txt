@@ -1,0 +1,96 @@
+✅ [1~5] Component Props (부모 ➝ 자식)
+Vue에서 자식 컴포넌트가 부모로부터 데이터를 받기 위해 사용하는 속성은?
+👉 props
+
+React에서 자식 컴포넌트로 값을 전달할 때 사용하는 객체는?
+👉 props
+
+Vue에서 <script setup> 구문을 사용할 때 props를 정의하는 함수는?
+👉 defineProps
+
+React에서 부모가 자식에게 콜백 함수를 전달할 때 사용하는 방식은?
+👉 props로 전달
+
+Vue에서 props로 전달된 데이터를 수정하려면 반드시 무엇을 만들어야 하는가?
+👉 emit
+
+✅ [6~10] 상태 관리 (ref, reactive | useState, useReducer)
+Vue에서 원시 타입 값을 반응형으로 만들기 위해 사용하는 함수는?
+👉 ref
+
+Vue에서 객체형 데이터를 반응형으로 만들기 위해 사용하는 함수는?
+👉 reactive
+
+React에서 복잡한 상태를 관리하기 위해 사용하는 Hook은?
+👉 useReducer
+
+React에서 가장 기본적인 상태 관리를 위해 사용하는 Hook은?
+👉 useState
+
+Vue에서 ref로 만든 값을 사용할 때 실제 값에 접근하려면 어떤 키워드를 사용해야 하는가?
+👉 .value
+
+✅ [11~15] 생명 주기 (onMounted, watch | useEffect)
+Vue에서 컴포넌트가 마운트될 때 한 번 실행되는 함수는?
+👉 onMounted
+
+Vue에서 상태 값이 변경될 때 반응하여 실행되는 감시 함수는?
+👉 watch
+
+React에서 컴포넌트 마운트/언마운트 시 실행되는 Hook은?
+👉 useEffect
+
+React의 useEffect가 마운트 시 한 번만 실행되도록 하려면 의존성 배열을 어떻게 설정해야 하는가?
+👉 []
+
+Vue에서 watch로 객체의 깊은 변화를 감지하려면 어떤 옵션을 설정해야 하는가?
+👉 deep: true
+
+✅ [16~20] 성능 최적화 (computed | useMemo, useCallback, React.memo)
+Vue에서 캐싱된 계산 속성을 만들 때 사용하는 키워드는?
+👉 computed
+
+React에서 계산 결과를 메모이제이션할 때 사용하는 Hook은?
+👉 useMemo
+
+React에서 함수를 메모이제이션할 때 사용하는 Hook은?
+👉 useCallback
+
+React에서 컴포넌트를 불필요하게 다시 렌더링하지 않도록 감싸는 고차 함수는?
+👉 React.memo
+
+Vue의 computed는 내부적으로 어떤 메커니즘을 통해 불필요한 계산을 줄이는가?
+👉 캐싱
+
+✅ [21~23] 비동기 통신 (axios)
+Vue 또는 React에서 HTTP 요청을 보내기 위해 가장 많이 사용하는 라이브러리는?
+👉 axios
+
+axios로 비동기 요청을 보낼 때 사용하는 키워드는?
+👉 async / await
+
+axios에서 서버로부터 응답 데이터를 받는 객체의 속성 이름은?
+👉 response.data
+
+✅ [24~26] 전역 상태 관리 (pinia | context API)
+Vue 3에서 전역 상태를 정의하는 라이브러리는?
+👉 pinia
+
+React에서 상태를 전역으로 공유하기 위한 구조를 만드는 기능은?
+👉 Context API
+
+React의 Context를 사용하려면 반드시 어떤 컴포넌트를 감싸야 하는가?
+👉 Provider
+
+✅ [27~30] 조건부 렌더링 (v-if, v-else | &&, 3항연산자)
+Vue에서 조건에 따라 HTML 요소를 렌더링하는 디렉티브는?
+👉 v-if
+
+Vue에서 v-if 조건이 false일 경우 다른 요소를 렌더링하기 위해 사용하는 디렉티브는?
+👉 v-else
+
+React에서 조건이 참일 때만 요소를 렌더링할 때 사용하는 연산자는?
+👉 &&
+
+React에서 조건에 따라 두 가지 중 하나를 선택하여 렌더링하는 데 사용하는 연산자는?
+👉 삼항 연산자 (조건 ? A : B)

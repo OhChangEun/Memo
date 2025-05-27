@@ -1,0 +1,45 @@
+& + button 쓰는 이유 
+
+CSS에서 형제 선택자를 사용할 때의 문법입니다.
+이걸 쉽게 풀어서 설명해볼게요 👇
+
+🧩 & + button 뜻
+& + button {
+  margin-left: 1rem;
+}
+이건 styled-components 문법이고,
+여기서 &는 현재 스타일링 중인 요소 자체를 의미합니다.
+즉, Button 컴포넌트를 말해요.
+
+✅ 해석
+<Button>첫 번째</Button>
+<Button>두 번째</Button>
+<Button>세 번째</Button>
+
+위처럼 버튼 3개가 있을 때,
+CSS의 & + button는 이렇게 작동합니다:
+
+현재 버튼 & 다음에 오는 바로 옆 형제 button에게
+margin-left: 1rem;을 줘라!
+
+결과:
+첫 번째 버튼: margin 없음
+두 번째 버튼: 왼쪽에 margin 생김
+세 번째 버튼: 왼쪽에 margin 생김
+
+🎯 비주얼로 표현
+버튼 순서	적용 여부	이유
+첫 번째	❌ 안 됨	앞에 버튼이 없어서
+두 번째	✅ margin 적용됨	앞에 Button 있음
+세 번째	✅ margin 적용됨	앞에 Button 있음
+
+📌 요약
+문법	의미
+&	현재 컴포넌트 자신
++ button	바로 뒤에 있는 형제 <button> 요소
+& + button	자기 다음 형제 버튼에 스타일 적용
+
+🔧 실제 쓰는 이유
+버튼 여러 개를 나란히 만들 때,
+첫 버튼은 붙이고
+두 번째부터만 간격(margin)을 주고 싶을 때 자주 사용합니다.
