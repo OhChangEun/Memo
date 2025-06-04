@@ -1,0 +1,65 @@
+
+🔹 1. private static String school = "가산고";
+클래스 변수 (정적 필드)
+클래스에 공통적으로 존재하는 변수입니다.
+객체를 만들지 않아도 클래스명.school로 접근할 수 있습니다.
+모든 객체가 같은 값을 공유합니다.
+Student.school = "가산고"; // 객체 없이 접근 가능
+
+🔹 2. private int num;
+
+인스턴스 변수
+객체가 생성될 때마다 개별적으로 생성되는 변수입니다.
+각각의 객체가 고유한 값을 가짐.
+
+Student s1 = new Student();
+s1.num = 101;
+Student s2 = new Student();
+s2.num = 102;
+s1과 s2는 num이 다를 수 있지만, school은 둘 다 "가산고"를 공유함.
+
+📌 차이 요약
+항목	static 필드 (school)	인스턴스 필드 (num)
+소속	클래스	객체(instance)
+메모리	한 번만 생성됨 (공유됨)	객체마다 생성됨
+접근 방식	클래스명.변수	객체명.변수
+사용 예	학교 이름, 회사명 등 공통 값	학번, 이름 등 개별 값
+
+필요에 따라 static을 쓸지, 인스턴스를 쓸지 선택하면 됩니다!
+
+
+
+static 변수는 **"그 클래스를 사용하는 모든 객체들이 하나의 값을 공유"**한다는 뜻입니다.
+
+public class Student {
+    private static String school = "가산고"; // 공유됨
+    private int num; // 개별 학번
+
+    public Student(int num) {
+        this.num = num;
+    }
+
+    public void printInfo() {
+        System.out.println("학번: " + num + ", 학교: " + school);
+    }
+
+    public static void setSchool(String newSchool) {
+        school = newSchool;
+    }
+}
+
+Student s1 = new Student(101);
+Student s2 = new Student(102);
+
+s1.printInfo(); // 학번: 101, 학교: 가산고
+s2.printInfo(); // 학번: 102, 학교: 가산고
+
+Student.setSchool("서울고"); // 클래스 전체의 school 값 변경
+
+s1.printInfo(); // 학번: 101, 학교: 서울고
+s2.printInfo(); // 학번: 102, 학교: 서울고
+
+🔑 핵심 요약
+static: 클래스 하나에 소속된 공용 자원, 객체들이 값을 같이 씀
+일반 변수: 각 객체가 자기만의 값을 따로 가짐
+즉, static은 하나의 복사본만 존재하고, 모든 객체가 그 하나를 함께 사용해요.

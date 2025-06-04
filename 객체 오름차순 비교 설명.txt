@@ -1,0 +1,62 @@
+CarComp라는 자동차 객체를 정의하고, 해당 객체들이 서로 비교될 수 있도록 Comparable 인터페이스를 구현한 예제입니다.
+
+✅ 클래스 구조 요약
+public class CarComp implements Comparable<CarComp>
+CarComp 클래스는 자동차의 정보(이름, 연식, 색상)를 저장합니다.
+
+Comparable<CarComp>를 구현해서 자동차 객체들끼리 정렬 가능한(compareTo) 객체가 됩니다.
+
+✅ 멤버 변수 (자동차의 속성)
+String name;   // 자동차 이름
+int year;      // 연식
+String color;  // 색상
+
+✅ 생성자
+public CarComp(String name, int year, String color)
+자동차 객체를 만들 때 name, year, color를 초기화합니다.
+
+예:
+CarComp car = new CarComp("Avante", 2020, "Red");
+
+✅ 정렬 기준 정의: compareTo() 메서드
+@Override
+public int compareTo(CarComp o) {
+    if (this.year == o.year) {
+        return this.name.compareTo(o.name); // 같은 연식이면 이름 기준으로 정렬 (사전순)
+    }
+    return 0; // 연식이 다르면 동일하다고 간주함
+}
+
+🔹 문제점 (주의사항)
+연식(year)이 다르면 return 0, 즉 "같다고 판단"합니다.
+→ 이렇게 하면 정렬 시 연식이 무시되기 때문에, 대부분의 경우 잘못된 결과를 초래합니다.
+정상적인 비교는 다음과 같이 구현하는 것이 일반적입니다:
+
+@Override
+public int compareTo(CarComp o) {
+    if (this.year != o.year) {
+        return Integer.compare(this.year, o.year); // 연식 오름차순
+    }
+    return this.name.compareTo(o.name); // 연식 같으면 이름 기준
+}
+
+✅ Integer.compare(a, b)는 a < b면 음수, 같으면 0, a > b면 양수 반환합니다.
+✅ 예시 정렬 결과 (올바른 compareTo 기준 사용 시)
+
+List<CarComp> cars = Arrays.asList(
+    new CarComp("Sonata", 2021, "Blue"),
+    new CarComp("Avante", 2020, "Red"),
+    new CarComp("Grandeur", 2020, "Black")
+);
+Collections.sort(cars);
+정렬 결과:
+
+Avante (2020)
+Grandeur (2020)
+Sonata (2021)
+
+✅ 정리
+요소	설명
+Comparable 구현	객체 간 정렬 기준을 정의하기 위함
+compareTo()	연식이 같으면 이름 기준 정렬, 현재 코드에는 연식이 다르면 비교하지 않음 (문제 있음)
+개선 필요	연식을 기준으로 먼저 정렬하고, 같을 경우 이름으로 비교하도록 수정 권장

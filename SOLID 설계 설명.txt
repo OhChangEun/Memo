@@ -1,0 +1,206 @@
+SOLID 설계 원칙은 **객체 지향 프로그래밍(OOP)**에서 유지보수성과 확장성을 높이기 위한 5가지 기본 원칙입니다. 
+각 원칙의 앞 글자를 따서 SOLID라고 부릅니다.
+
+1. S - 단일 책임 원칙 (SRP: Single Responsibility Principle)
+정의: 클래스는 단 하나의 책임만 가져야 한다.
+목적: 변경 이유가 하나뿐이어야 함.
+예시:
+❌ ReportPrinter 클래스가 보고서 생성 + 출력 기능 모두 담당
+✅ ReportGenerator 클래스는 보고서 생성만, Printer 클래스는 출력만 담당
+
+2. O - 개방-폐쇄 원칙 (OCP: Open/Closed Principle)
+정의: 확장에는 열려 있고, 수정에는 닫혀 있어야 한다.
+목적: 기존 코드를 변경하지 않고 기능을 추가할 수 있게 함.
+예시:
+전략 패턴 등을 활용해 새로운 전략을 추가할 수 있도록 설계
+
+3. L - 리스코프 치환 원칙 (LSP: Liskov Substitution Principle)
+정의: 자식 클래스는 부모 클래스를 대체할 수 있어야 한다.
+목적: 다형성 유지, 오류 방지
+예시:
+✅ Bird → Sparrow는 가능
+❌ Bird → Penguin에서 fly()를 상속받았지만 실제 날 수 없다면 LSP 위반
+
+4. I - 인터페이스 분리 원칙 (ISP: Interface Segregation Principle)
+정의: 클라이언트는 자신이 사용하지 않는 인터페이스에 의존하지 않아야 한다.
+목적: 불필요한 메서드 구현 방지
+예시:
+❌ IMachine 인터페이스에 Print(), Scan(), Fax() 모두 포함 → 단순 프린터도 Fax() 구현해야 함
+✅ IPrinter, IScanner, IFax로 분리
+
+5. D - 의존 역전 원칙 (DIP: Dependency Inversion Principle)
+정의: 고수준 모듈은 저수준 모듈에 의존하면 안 되며, 추상화에 의존해야 한다.
+목적: 모듈 간 결합도 감소
+예시:
+❌ OrderService가 직접 MySQLDatabase 사용
+✅ IDatabase 인터페이스에 의존 → MySQL이든 Oracle이든 교체 가능
+
+🔄 요약표
+원칙	핵심 키워드	목적
+SRP	하나의 책임	변경 이유 분리
+OCP	확장 가능, 수정 불가	유연한 기능 추가
+LSP	자식은 부모 대체 가능	다형성 유지
+ISP	인터페이스 분리	불필요한 의존 제거
+DIP	추상화에 의존	모듈 결합도 낮추기
+
+
+✅ 1. SRP - 단일 책임 원칙
+클래스는 오직 하나의 책임만 가져야 한다.
+
+❌ 잘못된 예:
+public class Employee {
+    public void calculatePay() { /* 급여 계산 */ }
+    public void saveToDatabase() { /* DB 저장 */ }
+}
+Employee 클래스가 급여 계산 + DB 저장 두 가지 책임을 가짐 → SRP 위반
+
+✅ 올바른 예:
+public class Employee {
+    public void calculatePay() { /* 급여 계산 */ }
+}
+
+public class EmployeeRepository {
+    public void saveToDatabase(Employee emp) { /* DB 저장 */ }
+}
+
+각 클래스는 하나의 책임만 수행 → 유지보수 쉬움
+
+✅ 2. OCP - 개방/폐쇄 원칙
+기존 코드를 수정하지 않고, 기능을 확장할 수 있어야 함
+
+❌ 잘못된 예:
+public class Notification {
+    public void send(String type) {
+        if (type.equals("EMAIL")) {
+            System.out.println("Sending Email");
+        } else if (type.equals("SMS")) {
+            System.out.println("Sending SMS");
+        }
+    }
+}
+새로운 알림 방식이 추가되면 기존 코드 수정 필요 → OCP 위반
+
+✅ 올바른 예:
+public interface MessageSender {
+    void send();
+}
+
+public class EmailSender implements MessageSender {
+    public void send() { System.out.println("Sending Email"); }
+}
+
+public class SmsSender implements MessageSender {
+    public void send() { System.out.println("Sending SMS"); }
+}
+
+public class Notification {
+    public void notifyUser(MessageSender sender) {
+        sender.send();
+    }
+}
+새로운 방식 추가 시 MessageSender 구현 클래스만 만들면 됨 → 확장 가능, 수정 불필요
+
+✅ 3. LSP - 리스코프 치환 원칙
+자식 클래스는 부모 클래스를 대체해도 문제 없어야 함
+
+❌ 잘못된 예:
+class Bird {
+    public void fly() {
+        System.out.println("Flying...");
+    }
+}
+
+class Ostrich extends Bird {
+    public void fly() {
+        throw new UnsupportedOperationException("I can't fly");
+    }
+}
+Ostrich는 날 수 없음 → 부모를 대체할 수 없음 → LSP 위반
+
+✅ 올바른 예:
+interface Bird {
+    void move();
+}
+
+class Sparrow implements Bird {
+    public void move() { System.out.println("Flying"); }
+}
+
+class Ostrich implements Bird {
+    public void move() { System.out.println("Running"); }
+}
+Bird를 구현하는 방식으로 대체 가능 → 다형성 유지
+
+✅ 4. ISP - 인터페이스 분리 원칙
+클라이언트는 사용하지 않는 인터페이스에 의존하면 안 됨
+
+❌ 잘못된 예:
+interface Machine {
+    void print();
+    void scan();
+    void fax();
+}
+
+class SimplePrinter implements Machine {
+    public void print() { System.out.println("Printing"); }
+    public void scan() { /* 필요 없음 */ }
+    public void fax() { /* 필요 없음 */ }
+}
+사용하지 않는 메서드를 구현해야 함 → ISP 위반
+
+✅ 올바른 예:
+interface Printer {
+    void print();
+}
+
+interface Scanner {
+    void scan();
+}
+
+class SimplePrinter implements Printer {
+    public void print() { System.out.println("Printing"); }
+}
+필요한 기능만 인터페이스로 분리 → 불필요한 구현 제거
+
+✅ 5. DIP - 의존 역전 원칙
+고수준 모듈은 저수준 모듈에 의존 X, 추상화에 의존
+
+❌ 잘못된 예:
+class MySQLDatabase {
+    public void save() {
+        System.out.println("Saved in MySQL");
+    }
+}
+
+class DataService {
+    MySQLDatabase db = new MySQLDatabase();
+    public void save() {
+        db.save();
+    }
+}
+구체 클래스에 직접 의존 → 유연성 부족
+
+✅ 올바른 예:
+interface Database {
+    void save();
+}
+
+class MySQLDatabase implements Database {
+    public void save() {
+        System.out.println("Saved in MySQL");
+    }
+}
+
+class DataService {
+    private Database db;
+
+    public DataService(Database db) {
+        this.db = db;
+    }
+
+    public void save() {
+        db.save();
+    }
+}
+Database 인터페이스에 의존 → MySQL, Oracle 등 자유롭게 교체 가능
+

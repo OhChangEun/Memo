@@ -1,0 +1,45 @@
+자바에서 final 키워드는 **"한 번만 할당 가능"하거나 "변경할 수 없음"**을 의미하며, 변수, 메서드, 클래스에 각각 다르게 적용됩니다. 아래는 각 경우에 대한 설명입니다:
+
+1. final 변수
+한 번만 초기화 가능하며, 이후 값을 변경할 수 없습니다.
+
+final int number = 10;
+number = 20;  // 오류 발생! final 변수는 값 변경 불가
+멤버 변수에 final 사용 시, 생성자에서 초기화하거나 선언과 동시에 초기화해야 합니다.
+
+참조형 변수에 final을 사용하면 참조 자체는 변경할 수 없지만, 참조된 객체의 내부 상태는 변경 가능합니다.
+
+final List<String> list = new ArrayList<>();
+list.add("Hello");  // 가능!
+list = new ArrayList<>();  // 오류! 참조 변경 불가
+
+2. final 메서드
+하위 클래스에서 오버라이딩(재정의)할 수 없습니다.
+class Parent {
+    final void print() {
+        System.out.println("부모 출력");
+    }
+}
+
+class Child extends Parent {
+    void print() {  // 오류! final 메서드는 오버라이드 불가
+        System.out.println("자식 출력");
+    }
+}
+
+3. final 클래스
+상속할 수 없습니다. 즉, 해당 클래스를 부모 클래스로 사용할 수 없습니다.
+
+final class Animal {
+    // ...
+}
+
+class Dog extends Animal {  // 오류! final 클래스는 상속 불가
+    // ...
+}
+
+요약
+사용 대상	의미
+final 변수	값 변경 불가 (한 번만 초기화 가능)
+final 메서드	오버라이딩 불가
+final 클래스	상속 불가

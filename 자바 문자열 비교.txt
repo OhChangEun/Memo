@@ -1,0 +1,15 @@
+자바 문자열 비교
+
+String name1 = "안유진";
+String name2 = "안유진";
+String name3 = new String("안유진");
+
+✅ name1과 name2
+문자열 리터럴 "안유진"은 String Constant Pool(문자열 상수 풀)에 저장됩니다.
+동일한 문자열 리터럴이 있으면 재사용됩니다.
+그래서 name1 == name2 → true (같은 주소 참조)
+
+✅ name3
+new String("안유진")은 heap 영역에 새로운 객체를 생성합니다.
+문자열 값은 같아도, 참조 주소가 다릅니다.
+그래서 name1 == name3 → false
