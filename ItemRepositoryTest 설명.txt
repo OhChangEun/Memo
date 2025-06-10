@@ -1,0 +1,44 @@
+✅ @Slf4j
+
+역할:
+Lombok이 제공하는 로그(Logger) 관련 애너테이션이야.
+→ log.info(), log.debug() 같은 로그 메서드를 바로 쓸 수 있게 자동으로 Logger 객체 생성해줘.
+
+자동 생성 코드 (예시):
+private static final Logger log = LoggerFactory.getLogger(현재클래스이름.class);
+
+사용 예:
+log.info("테스트 시작");
+
+✅ @SpringBootTest
+
+역할:
+스프링 부트를 사용하는 통합 테스트 환경을 구성해주는 애너테이션이야.
+
+특징:
+실제 애플리케이션처럼 스프링 컨텍스트를 통째로 실행함 (빈 자동 주입도 가능)
+예를 들어 @Autowired, @Transactional 같은 애너테이션도 테스트 코드에서 정상 작동함
+예시:
+@SpringBootTest
+class ItemRepositoryTest {
+    @Autowired
+    ItemRepository itemRepository;
+}
+
+✅ @TestPropertySource(locations = "classpath:application-test.properties")
+
+역할:
+테스트 실행 시 사용할 설정 파일(application-test.properties) 을 명시해주는 애너테이션이야.
+왜 쓰냐면?
+기본 설정 파일인 application.properties나 application.yml 대신
+테스트 전용 DB, 설정값 등을 별도로 사용하고 싶을 때 설정함.
+예:
+# application-test.properties
+spring.datasource.url=jdbc:h2:mem:testdb
+spring.jpa.hibernate.ddl-auto=create-drop
+
+🧠 요약
+애너테이션	설명
+@Slf4j	로그 찍을 수 있는 log 객체 자동 생성 (log.info())
+@SpringBootTest	스프링 통합 테스트 환경 구성 (빈 주입, DB 연동 등 실제 환경과 유사)
+@TestPropertySource	테스트 전용 설정 파일 사용 (application-test.properties 읽음)

@@ -1,0 +1,32 @@
+@GeneratedValue(strategy = GenerationType.AUTO)
+
+ChatGPT의 말:
+@GeneratedValue(strategy = GenerationType.AUTO)는 JPA에서 기본 키(@Id) 값을 자동으로 생성할 때 사용하는 애노테이션이고,
+strategy = GenerationType.AUTO는 JPA 구현체가 자동으로 가장 적합한 키 생성 전략을 선택하도록 지정하는 옵션이야.
+
+@Id
+@GeneratedValue(strategy = GenerationType.AUTO)
+private Long id;
+
+@Id로 기본 키를 지정하고,
+@GeneratedValue로 키 값을 자동 생성하게 설정하는 거지.
+
+GenerationType 종류
+전략 이름	설명
+AUTO	JPA 구현체가 데이터베이스 종류에 맞춰 자동으로 적절한 전략 선택 (기본값)
+IDENTITY	DB의 AUTO_INCREMENT 컬럼 사용 (MySQL 등)
+SEQUENCE	DB 시퀀스 객체 사용 (Oracle, PostgreSQL 등)
+TABLE	별도의 키 생성용 테이블을 사용해 키 생성 (가장 범용적이나 성능은 낮음)
+
+AUTO 전략 동작 예시
+MySQL에서는 IDENTITY 전략으로 작동
+Oracle에서는 SEQUENCE 전략으로 작동
+
+Hibernate가 DB 종류를 보고 내부적으로 가장 적합한 전략을 선택해줘
+
+요약
+항목	설명
+@GeneratedValue	기본 키 값을 자동 생성하도록 지정
+strategy = AUTO	JPA가 DB에 맞는 전략을 자동으로 선택
+장점	DB 종류에 상관없이 코드를 통일 가능
+주의	DB별로 자동 생성 방식이 달라질 수 있음

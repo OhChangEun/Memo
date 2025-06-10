@@ -1,0 +1,39 @@
+Spring Data JPA와 Hibernate의 관계
+📌 Spring Data JPA
+개발자가 인터페이스만 선언하면,
+
+내부적으로 적절한 JPA 구현체(Hibernate 등) 를 사용해서 동작하게 해주는 "편의 프레임워크" 야.
+
+즉, 우리가 ItemRepository처럼 인터페이스만 선언해도 동작하는 건 Spring Data JPA + Hibernate 조합 덕분이야.
+
+📌 Hibernate
+JPA 사양(인터페이스) 의 구현체 중 하나.
+
+실제로 SQL을 생성하고 실행하며, DB와 직접 통신하는 역할을 함.
+Spring Data JPA가 자동 생성한 쿼리를 Hibernate가 JPQL → SQL로 변환해서 실행해.
+
+🔁 실행 흐름 예시
+List<Item> list = itemRepository.findByItemNm("테스트 상품5");
+findByItemNm는 메서드 이름으로 쿼리가 만들어짐 (Spring Data JPA)
+
+JPQL: SELECT i FROM Item i WHERE i.itemNm = :itemNm
+
+Hibernate가 이 JPQL을 → DB에 맞는 SQL로 변환
+예: SELECT * FROM item WHERE item_nm = '테스트 상품5'
+
+SQL을 DB에 실행하고 결과를 List<Item>으로 매핑해서 반환
+
+✅ 그림으로 요약
+[ItemRepository 인터페이스]
+        ↓
+[Spring Data JPA] → 메서드 이름 분석 → JPQL 생성
+        ↓
+[Hibernate (JPA 구현체)] → JPQL → SQL 변환 & 실행
+        ↓
+[DB에서 결과 조회]
+        ↓
+[List<Item> 반환]
+
+✅ 한줄 요약
+Spring Data JPA는 우리가 만든 Repository 메서드를 분석하고,
+Hibernate가 그걸 SQL로 바꿔 실행하며, 실제로 DB와 통신하는 역할을 담당해!

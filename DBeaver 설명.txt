@@ -1,0 +1,25 @@
+DBeaver는 다양한 데이터베이스를 관리하고 쿼리할 수 있게 도와주는 오픈 소스 데이터베이스 관리 도구입니다. 데이터베이스 관리자(DBA), 개발자, 데이터 분석가들이 자주 사용하는 툴입니다.
+
+✅ 주요 특징
+다양한 DB 지원
+MySQL, PostgreSQL, Oracle, SQL Server, SQLite, MariaDB, DB2, Sybase, Teradata 등 거의 모든 주요 데이터베이스 지원
+GUI 기반
+SQL 쿼리를 직접 입력하거나, 테이블을 마우스로 클릭해서 조회/수정 가능
+ER 다이어그램 자동 생성
+테이블 간 관계를 시각적으로 보여주는 ERD 기능
+데이터 편집 기능
+테이블 데이터를 엑셀처럼 수정 가능
+SQL 편집기
+자동완성, 구문 강조(Syntax Highlighting), 실행계획 보기 등 고급 기능 제공
+플러그인 기반 확장성
+Git 연동, Excel로 내보내기, MongoDB, Cassandra 등 비관계형 DB도 지원 가능
+
+🖥️ 사용 예시
+개발자: 개발 중 DB 구조를 확인하고 쿼리 테스트
+데이터 분석가: 복잡한 쿼리로 데이터 분석
+DBA: 테이블 구조 관리, 백업 등 수행
+
+🔽 설치 방법
+공식 사이트: https://dbeaver.io
+무료 버전(DBeaver Community)과 유료 기능 포함된 DBeaver Enterprise Edition이 있음
+필요하면 DBeaver 사용법(예: DB 연결 방법, 쿼리 실행 방법 등)도 알려줄게요.

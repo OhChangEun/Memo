@@ -1,0 +1,86 @@
+🔹 1. Entity (엔티티)
+역할: 데이터베이스 테이블과 매핑되는 클래스 (JPA에서 사용).
+주요 기능:
+DB 컬럼과 1:1 매핑
+@Entity 어노테이션 사용
+비즈니스 로직은 최소화 (순수한 데이터 구조)
+
+📌 예:
+@Entity
+public class User {
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    private String name;
+    private String email;
+}
+
+🔹 2. DTO (Data Transfer Object)
+역할: 클라이언트 ↔ 서버 간 데이터 전송에 사용하는 객체.
+주요 기능:
+Entity의 모든 정보를 노출하지 않고 필요한 데이터만 전달
+보안 및 응답 구조 제어
+
+📌 예:
+public class UserDto {
+    private String name;
+    private String email;
+}
+
+🔹 3. Controller
+역할: 클라이언트의 요청(Request)을 받아 처리 결과를 응답(Response)으로 반환.
+주요 기능:
+URL 매핑 처리 (@RestController, @RequestMapping)
+요청 처리 흐름을 Service로 위임
+
+📌 예:
+@RestController
+@RequestMapping("/users")
+public class UserController {
+    private final UserService userService;
+
+    @PostMapping
+    public ResponseEntity<Void> createUser(@RequestBody UserDto userDto) {
+        userService.createUser(userDto);
+        return ResponseEntity.ok().build();
+    }
+}
+
+🔹 4. Service
+역할: 핵심 비즈니스 로직을 담당.
+주요 기능:
+Controller로부터 요청 받은 작업 처리
+트랜잭션 처리 (@Transactional)
+Repository 호출
+
+📌 예:
+@Service
+public class UserService {
+    private final UserRepository userRepository;
+
+    public void createUser(UserDto userDto) {
+        User user = new User(userDto.getName(), userDto.getEmail());
+        userRepository.save(user);
+    }
+}
+
+🔹 5. Repository
+역할: 데이터베이스 접근을 담당 (CRUD 수행).
+주요 기능:
+JPA 인터페이스 확장 (JpaRepository, CrudRepository)
+쿼리 메서드 제공
+
+📌 예:
+public interface UserRepository extends JpaRepository<User, Long> {
+    Optional<User> findByEmail(String email);
+}
+
+✅ 정리표
+구성 요소		역할 요약
+Entity			DB 테이블과 매핑되는 데이터 모델
+DTO			데이터 전송을 위한 객체 (보안/구조 제어)
+Controller		클라이언트 요청 처리 및 응답 반환
+Service		비즈니스 로직 처리, 트랜잭션 관리
+Repository		DB 접근, 데이터 조회/저장
+

@@ -1,0 +1,67 @@
+팀 협업에서 폴더 구조를 명확히 나누고 유지보수를 편하게 하기 위해 최근 많이 쓰는 방식 중 하나가 바로 **FSD 구조 (Feature-Sliced Design)**입니다.
+
+🧩 FSD란? (Feature-Sliced Design)
+페이지 단위가 아닌 “기능 단위(Feature)”로 프로젝트를 구조화하는 방식
+
+React나 Vue로 규모가 있는 프로젝트를 하거나 협업 시에, 폴더를 components/, pages/ 식으로 나누면 나중에 어떤 컴포넌트가 어떤 기능에 쓰이는지 헷갈릴 수 있습니다.
+FSD는 기능 중심 구조로 나누기 때문에 유지보수와 확장이 쉽고 협업에 유리합니다.
+
+✅ 기본 개념
+src/
+├── app/              # 앱 전체 설정 (라우팅, 테마 등)
+├── shared/           # 전역 공통 요소 (공통 Button, 유틸 함수 등)
+├── entities/         # 핵심 도메인 (User, Post 등 - 상태 & 모델 중심)
+├── features/         # 하나의 독립적 기능 단위 (로그인, 좋아요 버튼 등)
+├── widgets/          # 페이지를 구성하는 조합된 UI 블록 (헤더, 사이드바 등)
+├── pages/            # 라우팅되는 페이지
+├── processes/        # 여러 기능을 묶은 복합 흐름 (예: 회원가입 플로우)
+└── index.js
+
+📁 예시 (React or Vue 둘 다 유사하게 적용 가능)
+src/
+├── app/
+│   ├── providers/        # 전역 Provider 설정 (예: ThemeProvider)
+│   └── router.jsx
+├── shared/
+│   ├── ui/               # 공통 UI (Button, Input)
+│   ├── lib/              # 유틸 함수 (예: formatDate)
+│   └── config/           # 공통 설정 (예: API 주소)
+├── entities/
+│   └── user/
+│       ├── model.js      # 상태 관리
+│       ├── api.js        # 서버 요청
+│       └── types.js
+├── features/
+│   └── auth/
+│       ├── LoginForm.jsx
+│       └── model.js
+├── widgets/
+│   └── Header/
+│       ├── index.jsx
+│       └── style.css
+├── pages/
+│   └── HomePage.jsx
+└── main.jsx
+
+🙋‍♂️ 왜 쓰는가?
+장점	설명
+✅ 협업 용이	기능 단위로 나누면 역할 분담이 명확해짐
+✅ 유지보수 쉬움	수정이 필요한 기능만 정확히 찾아갈 수 있음
+✅ 규모 확장 쉬움	기능 추가 시 폴더 하나만 새로 만들면 됨
+✅ 테스트 쉬움	각 기능별로 유닛 테스트 분리 가능
+
+🛠 초보 팀에 추천할까?
+팀원들이 모듈화, 역할 분리 개념을 조금이라도 알고 있다면 매우 추천
+너무 복잡하게 시작하지 말고 아래처럼 필요한 것만 적용하면 충분합니다:
+
+src/
+├── features/       # 로그인, 회원가입, 좋아요 등 기능
+├── shared/         # 버튼, 인풋, 유틸 등 공통 요소
+├── pages/          # HomePage, MyPage 등
+├── widgets/        # Header, Sidebar 같은 큰 UI 덩어리
+└── app/            # 라우팅, 상태 관리 등 앱 설정
+
+✅ 결론
+상황	추천 구조
+소규모 연습 프로젝트	components/, pages/ 위주로 심플하게 시작
+팀 프로젝트, 기능 분리 필요	FSD 구조 적극 추천 (기능 단위로 나누기)

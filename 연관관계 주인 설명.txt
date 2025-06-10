@@ -1,0 +1,60 @@
+JPA에서 양방향 관계를 맺을 때 꼭 알아야 하는 핵심 개념입니다.
+
+✅ 연관관계 주인(owner)란?
+"외래 키(FK)를 관리하는 쪽", 즉
+DB에 실제로 외래 키 컬럼이 있는 엔티티
+
+🔸 예시: 학교(School)와 학생(Student)
+학교 1 : N 학생 관계에서 외래 키는 Student 테이블에 있어요.
+
+Student 엔티티
+
+@Entity
+public class Student {
+    @ManyToOne
+    @JoinColumn(name = "school_id") // 외래 키 있음 (연관관계 주인)
+    private School school;
+}
+School 엔티티
+
+@Entity
+public class School {
+    @OneToMany(mappedBy = "school") // 주인 아님
+    private List<Student> students;
+}
+✅ 왜 주인을 정해야 해?
+양방향 관계에서 양쪽이 다 외래키를 조작하면 충돌해요.
+
+그래서 JPA는:
+
+"외래키 값을 누가 업데이트할지?" → 하나를 **주인(owner)**으로 지정
+
+나머지는 읽기 전용(mappedBy) 으로 만듦
+
+✅ 정리 표
+항목	설명
+연관관계 주인	외래키가 있는 쪽 (@ManyToOne)
+mappedBy 사용 대상	주인이 아닌 쪽 (@OneToMany)
+mappedBy 값	주인 쪽 클래스의 필드명
+효과	외래키가 한 군데서만 관리됨 = DB 혼란 방지
+
+✅ 실전에서 주인은 누구?
+관계 종류	주인
+1:N	N 쪽 (@ManyToOne)
+N:1	N 쪽 (@ManyToOne)
+1:1	외래 키가 있는 쪽
+N:N	조인 테이블에 따로 설정 필요
+
+✅ 예를 들어볼게요
+student.setSchool(school);
+이렇게 저장할 때, Student가 외래키를 가진 "주인"이기 때문에
+JPA는 school_id 값을 Student 테이블에 넣어서 DB에 저장합니다.
+
+반대로 school.getStudents().add(student);만 해서는 DB에 저장 안 돼요.
+👉 주인(student)이 외래키를 바꾸지 않았기 때문이에요.
+
+✅ 결론
+JPA에서 양방향 관계는 반드시 주인과 비주인을 나눠야 함
+연관관계 주인(owner) = 외래키를 가진 쪽
+주인이 아닌 쪽은 mappedBy로 "난 그냥 반대쪽이 주인이야~"라고 알려줘야 함
+

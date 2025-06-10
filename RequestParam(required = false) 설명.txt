@@ -1,0 +1,15 @@
+✅ @RequestParam(required = false) 의미
+
+@RequestParam(required = false) String email
+@RequestParam은 쿼리 파라미터를 받기 위한 어노테이션입니다.
+
+required = false는 이 파라미터가 없어도 요청을 허용하겠다는 의미입니다.
+
+🔎 예시 요청
+GET /auth/members?email=user3@example.com
+→ email 값이 전달됨 → email = "user3@example.com"
+
+GET /auth/members
+→ email 값이 없음 → email = null
+
+✅ 요약: @RequestParam(required = false)은 쿼리 파라미터를 선택적으로 받을 수 있게 해주는 설정입니다.

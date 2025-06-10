@@ -1,0 +1,78 @@
+Spring에서 Bean 등록 방식과 의존성 주입(DI, Dependency Injection) 방법 3가지를 아래에 정리해드릴게요.
+
+✅ 1. 스프링에서 빈(Bean) 등록하는 방법
+💡 방법 1: 애노테이션 기반 등록 (가장 일반적)
+클래스에 특정 애노테이션을 붙이면 자동으로 Bean으로 등록됩니다.
+
+애노테이션	설명
+@Component	일반적인 컴포넌트 (기본)
+@Service	서비스 계층
+@Repository	DAO/DB 처리 계층
+@Controller or @RestController	웹 컨트롤러 계층
+
+예시:
+@Component
+public class MyComponent {
+    // 이 클래스는 Bean으로 등록됨
+}
+
+💡 방법 2: 자바 설정 클래스에서 수동 등록 (@Configuration + @Bean)
+@Configuration
+public class AppConfig {
+    
+    @Bean
+    public MyComponent myComponent() {
+        return new MyComponent(); // 수동 등록
+    }
+}
+@Bean을 쓰면 직접 만든 객체를 등록할 수 있습니다.
+외부 라이브러리 클래스도 Bean으로 등록 가능.
+
+✅ 2. 의존성 주입 방법 3가지
+① 생성자 주입 ✅ 추천
+@Component
+public class MyService {
+    private final MyRepository repository;
+
+    public MyService(MyRepository repository) {
+        this.repository = repository;
+    }
+}
+가장 권장되는 방식
+final 사용 가능 → 불변성 보장
+테스트 용이성 높음
+
+② 필드 주입
+@Component
+public class MyService {
+
+    @Autowired
+    private MyRepository repository;
+}
+간단하지만 테스트/유지보수 어려움
+
+Spring 내부에서만 동작 → 외부에서 주입 불가
+
+③ 세터(Setter) 주입
+java
+복사
+편집
+@Component
+public class MyService {
+
+    private MyRepository repository;
+
+    @Autowired
+    public void setRepository(MyRepository repository) {
+        this.repository = repository;
+    }
+}
+선택적 의존성이나 초기화 이후 주입할 때 사용
+
+꼭 필요하지 않으면 자주 사용되지는 않음
+
+✅ 핵심 요약
+항목	설명
+Bean 등록	@Component, @Service, @Bean, @Configuration 등
+주입 방식	생성자 주입(권장), 필드 주입, 세터 주입
+권장 방식	생성자 주입 (불변성 + 테스트에 유리)

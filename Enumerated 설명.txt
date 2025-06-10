@@ -1,0 +1,35 @@
+@Enumerated는 JPA에서 자바의 enum 타입 필드를 데이터베이스 컬럼에 매핑할 때 사용하는 애노테이션이야.
+
+역할
+자바 enum 타입을 DB에 저장할 때,
+DB에 저장하는 방법을 지정할 수 있어.
+
+저장 방식 옵션
+@Enumerated는 두 가지 값을 가질 수 있어:
+
+값	설명	DB 저장 예시 (enum Role { USER, ADMIN })
+EnumType.ORDINAL	enum의 **순서(0, 1, 2, ...)**를 숫자로 저장	0 → USER, 1 → ADMIN
+EnumType.STRING	enum의 **이름("USER", "ADMIN")**을 문자열로 저장	"USER", "ADMIN"
+
+기본값
+만약 @Enumerated 애노테이션을 생략하면, 기본값은 EnumType.ORDINAL 이 적용돼.
+
+예제
+public enum Role {
+    USER, ADMIN
+}
+
+@Entity
+public class Member {
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    @Enumerated(EnumType.STRING)  // DB에 "USER", "ADMIN"으로 저장
+    private Role role;
+}
+
+주의사항
+ORDINAL 방식은 enum 순서가 바뀌면 데이터와 매핑이 꼬일 위험이 있음
+그래서 보통 EnumType.STRING 방식을 권장함 (명시적으로 쓰는 게 안전)
+

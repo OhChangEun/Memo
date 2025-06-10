@@ -1,0 +1,48 @@
+✅ JPQL (Java Persistence Query Language) 이란?
+JPQL은 객체(Object)를 기준으로 쿼리하는 객체 지향 SQL이야.
+일반적인 SQL은 테이블(table)과 컬럼(column)을 기준으로 작성하지만,
+JPQL은 엔티티(Entity)와 필드(field) 를 기준으로 작성해.
+
+📌 JPQL vs SQL 비교 예시
+목적	
+상품명으로 상품 조회	
+
+JPQL	
+SELECT i FROM Item i WHERE i.itemNm = '사과'	
+
+SQL
+SELECT * FROM item WHERE item_nm = '사과'
+
+→ JPQL에서는 Item은 자바 클래스이고, itemNm은 필드명이야.
+→ SQL에서는 item은 테이블명, item_nm은 컬럼명이야.
+
+✅ 왜 JPQL을 써?
+JPA는 DB 테이블이 아닌 객체(Entity) 를 다루기 때문에,
+객체 중심의 쿼리 언어인 JPQL이 필요해.
+JPA는 이 JPQL을 받아서 DB에 맞는 SQL로 변환해 줘.
+
+✅ JPQL 기본 문법
+1. SELECT
+SELECT i FROM Item i WHERE i.price > 1000
+Item → 자바 클래스 이름
+i.price → 자바 필드 이름
+
+2. UPDATE / DELETE
+@Modifying
+@Query("UPDATE Item i SET i.stockNumber = 0 WHERE i.stockNumber < 0")
+void resetNegativeStock();
+→ 주의: @Modifying 붙여야 함 (Spring Data JPA에서)
+
+3. 정렬, LIKE, JOIN
+SELECT i FROM Item i WHERE i.itemNm LIKE '%사과%' ORDER BY i.price DESC
+
+✅ 실제 사용 예 (Spring Data JPA에서)
+@Query("SELECT i FROM Item i WHERE i.itemNm = :name")
+List<Item> findByName(@Param("name") String name);
+
+✅ 요약
+항목	설명
+💡 JPQL	엔티티 기반의 쿼리 언어 (JPA 전용 SQL)
+🧠 기준	테이블/컬럼이 아닌, 클래스/필드
+🔁 처리	Hibernate가 JPQL → SQL로 변환 후 DB 실행
+🎯 목적	DB 독립성 확보 + 객체 중심 쿼리 작성

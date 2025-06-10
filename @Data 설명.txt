@@ -1,0 +1,53 @@
+@Data는 Lombok 라이브러리에서 제공하는 어노테이션으로,
+자바 클래스에 자동으로 여러 유용한 메서드들을 생성해주는 역할을 해요.
+
+✅ @Data가 자동으로 만들어주는 것
+@Data 하나만 붙이면 다음을 자동 생성해줘요:
+
+생성되는 메서드	설명
+@Getter	모든 필드의 getter 메서드 생성 (getName() 같은 것)
+@Setter	모든 필드의 setter 메서드 생성 (setName() 같은 것)
+@ToString	toString() 메서드 자동 생성
+@EqualsAndHashCode	equals()와 hashCode() 자동 생성
+@RequiredArgsConstructor	final 필드나 @NonNull 필드를 파라미터로 받는 생성자 생성
+
+✅ 예시로 보기
+import lombok.Data;
+
+@Data
+public class Member {
+    private Long id;
+    private String name;
+}
+이렇게 하면 자바는 아래와 같은 코드를 자동으로 만들어줍니다:
+
+public class Member {
+    private Long id;
+    private String name;
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+
+    public String toString() { return "Member(id=" + id + ", name=" + name + ")"; }
+
+    public boolean equals(Object o) { ... }
+    public int hashCode() { ... }
+
+    public Member() { }
+}
+
+✅ 언제 쓰면 좋아?
+DTO나 Entity 클래스처럼 단순 데이터 보관 용도로 사용하는 클래스일 때
+Getter/Setter를 매번 쓰기 귀찮을 때
+코드를 간결하게 유지하고 싶을 때
+
+✅ 주의할 점
+모든 필드에 Setter가 생기므로, **불변 객체(Immutable)**로 만들고 싶을 때는 사용하지 않는 게 좋아요.
+Entity 클래스에서는 필드 하나하나에 직접 @Getter, @Setter를 붙이는 걸 더 권장하기도 해요. (JPA와 궁합 문제)
+
+✅ 결론
+@Data는 여러 어노테이션을 한 번에 묶어서 자동으로 코드 생성해주는 Lombok의 편의 어노테이션
+간단한 데이터 클래스에 아주 유용하지만, Entity 클래스에서는 너무 무분별하게 쓰면 문제 생길 수 있으니 주의

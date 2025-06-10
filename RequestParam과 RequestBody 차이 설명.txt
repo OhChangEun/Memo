@@ -1,0 +1,50 @@
+✅ 핵심 차이 요약
+항목			@RequestParam								@RequestBody
+데이터 위치	쿼리 파라미터, form-data, x-www-form-urlencoded		HTTP 요청 본문(JSON 등)
+주로 쓰는 곳	GET, POST에서 간단한 데이터 전달 시				POST, PUT에서 객체(JSON) 전달 시
+파싱 대상		키-값 쌍 (예: ?name=홍길동)						JSON → Java 객체로 매핑
+자동 매핑		단일 값 또는 필드 몇 개						전체 객체 매핑
+
+✅ 예제 비교
+📌 1. @RequestParam 예시
+@GetMapping("/search")
+public String search(@RequestParam String keyword, @RequestParam int page) {
+    // 호출 예: /search?keyword=apple&page=1
+    return "검색어: " + keyword + ", 페이지: " + page;
+}
+
+데이터 형식: URL 쿼리 문자열 또는 HTML Form 데이터
+용도: 간단한 값 받을 때 (숫자, 문자열 등)
+
+📌 2. @RequestBody 예시
+@PostMapping("/signup")
+public String signup(@RequestBody MemberRegDto dto) {
+    return "가입한 이메일: " + dto.getEmail();
+}
+
+요청 본문:
+{
+  "email": "test@example.com",
+  "name": "홍길동",
+  "pwd": "1234"
+}
+
+용도: 객체 전체를 JSON으로 받을 때 (로그인, 회원가입 등)
+
+✅ 언제 어떤 걸 써야 할까?
+
+상황	추천 방식
+URL에 간단한 데이터 전달 (GET, ?name=...)		@RequestParam
+클라이언트에서 JSON으로 데이터 전송 (POST, PUT)	@RequestBody
+HTML Form을 통해 값 전송					@RequestParam 또는 @ModelAttribute
+
+✅ 같이 사용 가능?
+네! 혼합 사용도 가능합니다.
+@PostMapping("/example")
+public String example(@RequestParam String type, @RequestBody SomeDto body) {
+    return "타입: " + type + ", 이름: " + body.getName();
+}
+✅ 결론
+구분	설명
+@RequestParam	URL 또는 폼에서 간단한 값 받을 때
+@RequestBody	JSON 등의 복잡한 객체를 받을 때

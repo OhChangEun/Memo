@@ -1,0 +1,46 @@
+Spring에서 말하는 **"빈(Bean)"**은 Spring 컨테이너가 관리하는 객체를 뜻합니다.
+
+✅ 빈(Bean)이란?
+Spring이 생성하고, 제어하고, 관리하는 객체를 **Bean(빈)**이라고 부릅니다.
+즉, 우리가 new로 직접 만들지 않고, Spring이 대신 만들어주고 관리하는 객체입니다.
+
+🔍 왜 Bean이라는 용어를 쓰는가?
+"Bean"이라는 용어는 JavaBeans에서 유래했습니다.
+JavaBean은 getter/setter를 가진 일반적인 자바 클래스를 뜻하지만,
+Spring에서는 그보다 더 넓은 의미로 사용됩니다:
+
+특정 역할을 하는 클래스
+Spring이 관리하는 객체
+재사용 가능하고 설정 가능한 구성 요소
+
+✅ Bean의 예시
+@Component
+public class MyService {
+    public void doSomething() {
+        System.out.println("작동 중!");
+    }
+}
+위의 클래스는 @Component 애노테이션 덕분에 빈으로 등록됩니다.
+이제 Spring이 이 객체를 만들어서 관리하게 됩니다.
+
+✅ 자동 주입 (Autowired)
+@RestController
+public class MyController {
+
+    @Autowired
+    private MyService myService;
+
+    @GetMapping("/test")
+    public String test() {
+        myService.doSomething();
+        return "OK";
+    }
+}
+@Autowired 덕분에 Spring이 MyService 빈을 자동으로 찾아서 myService에 주입해줍니다.
+우리는 new MyService() 같은 코드를 직접 쓸 필요가 없습니다.
+
+✅ 핵심 요약
+용어		의미
+Bean(빈)	Spring이 생성하고 관리하는 객체
+자동 주입	필요한 빈을 Spring이 자동으로 넣어주는 것 (@Autowired, 생성자 등)
+등록 방법	@Component, @Service, @Repository, @Bean 등 사용

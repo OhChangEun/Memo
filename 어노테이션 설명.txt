@@ -1,0 +1,44 @@
+📌 1. @Entity
+설명: 이 클래스가 JPA 엔티티라는 뜻이에요.
+기능: 이 클래스는 데이터베이스 테이블로 사용될 거라는 표시입니다.
+예를 들어 이 클래스가 DB에 member라는 이름의 테이블로 매핑돼요.
+
+📌 2. @Table(name = "member")
+설명: 이 엔티티가 매핑될 테이블 이름을 지정해요.
+기능: Member 클래스 → "member" 테이블에 매핑.
+없으면 클래스 이름 그대로 Member라는 이름으로 테이블이 만들어질 수 있어요.
+
+📌 3. @Getter, @Setter (Lombok)
+설명: Lombok 라이브러리가 제공하는 어노테이션입니다.
+기능: 자동으로 get()과 set() 메서드를 만들어줘요.
+예: getId(), setId(Long id) 같은 메서드를 직접 안 써도 됩니다.
+
+📌 4. @NoArgsConstructor (Lombok)
+설명: 기본 생성자를 자동으로 만들어줘요. (public Member() {})
+기능: JPA에서는 기본 생성자가 반드시 필요합니다.
+없으면 JPA가 객체를 생성할 수 없어요.
+
+📌 5. @Id
+설명: 이 필드가 기본 키(PK) 라는 뜻입니다.
+기능: DB 테이블에서 각 행을 구분하는 고유값으로 사용됩니다.
+
+📌 6. @GeneratedValue(strategy = GenerationType.AUTO)
+설명: ID 값을 자동 생성하라는 의미입니다.
+기능: 데이터베이스가 알아서 고유한 번호를 넣어줍니다.
+AUTO는 JPA가 DB에 맞게 자동으로 전략을 선택합니다.
+예: MySQL이면 AUTO_INCREMENT, Oracle이면 SEQUENCE 등.
+
+📌 7. @Column(name = "member id")
+설명: DB에 들어갈 컬럼 이름을 직접 지정하는 거예요.
+주의: "member id"는 공백이 있어서 오타일 가능성이 높아요. 일반적으로 member_id 같이 언더스코어를 씁니다.
+
+✅ 정리
+어노테이션	역할
+@Entity					이 클래스는 DB 테이블이다
+@Table(name = "member")		테이블 이름을 "member"로 지정
+@Getter, @Setter				get/set 메서드를 자동 생성 (Lombok)
+@NoArgsConstructor			기본 생성자 자동 생성 (Lombok)
+@Id	기본 키(PK) 지정
+@GeneratedValue			ID 값을 자동으로 생성
+@Column(name = "member id")	컬럼 이름 지정 → "member id" (공백 주의!)
+
